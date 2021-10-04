@@ -56,9 +56,13 @@ public final class Operacoes {
                 double x;
                 int startPos = this.pos;
                 if (eat('(')) { // parentheses
-                    x = parseExpression();
-                    eat(')');
-                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+                    if(eat(')')){
+                        x = 0;
+                    }else{
+                        x = parseExpression();
+                        eat(')');
+                    }
+                }else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
                     while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
                     x = Double.parseDouble(str.substring(startPos, this.pos));
                 } else if (ch >= 'a' && ch <= 'z') { // functions
@@ -69,6 +73,8 @@ public final class Operacoes {
                     else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
                     else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
                     else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+                    else if (func.equals("euler")) x = Math.exp(x);
+                    else if (func.equals("e")) x = Math.exp(1);
                     else throw new RuntimeException("Unknown function: " + func);
                 } else {
                     throw new RuntimeException("Unexpected: " + (char)ch);
