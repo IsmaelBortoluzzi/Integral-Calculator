@@ -4,8 +4,14 @@ public class Main {
     public static void main(String[] args) {
 
         // Scanner sc = new Scanner(System.in);
-        // double a, b, n;
-        String funcao = "e()";
+        double a=0, b=1, n=0.25;
+        String funcao = "x^2";
+
+        Riemann soma = new Riemann(a, b, n, funcao);
+
+        soma.calculateIntegral();
+
+        System.out.println(soma.getSomaMaior() + " " + soma.getSomaMenor());
 
         // System.out.print("Digite a função que deseja para calcular a integral: ");
         // funcao = sc.nextLine();
