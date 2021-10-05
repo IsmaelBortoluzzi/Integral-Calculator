@@ -1,63 +1,50 @@
+import java.text.DecimalFormat;
+
 public class Riemann {
 
     private double a;
     private double b;
     private double n;
-    private double somaMaior = 0;
-    private double somaMenor = 0;
     private String funcao;
 
-    public Riemann(double a, double b, double n,String funcao) {
+    public Riemann(double a, double b, double n, String funcao) {
 
         this.a = a;
         this.b = b;
-        this.n = n;
+        this.n = (a+b)/n;
         this.funcao = funcao;
 
     }
-    
-    private String getNotationValue(double valor){
-        String valorStr = Double.toString(valor);
-        if(valorStr.contains("E")){
-            StringBuilder sVal = new StringBuilder();
-            
-            for(int i; valorStr.charAt(i) != 'E'; i++){
-                sVal.append(valorStr.charAt(i));
-            }
-            
-            return sVal.toString();
-        }else{
-            return valorStr;
-        }    
-    }
-    
-    private void somaPelaDireita() {
+
+    public double[] calculateIntegral() {
+
+        double[] integrais = new double[2];
+        integrais[0] = integrais[1] = 0;
+
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(20);
 
         for(double i = this.a+n; i<=b; i+=n) {
 
-            this.somaMaior += n * Operacoes.eval(funcao.replaceAll("x", this.getNotationValue(i)));
+            integrais[0] += n * Operacoes.eval(funcao.replaceAll("x", df.format(i)));
         }
-
-    }
-    private void somaPelaEsquerda() {
 
         for(double i = this.a; i<b; i+=n) {
 
-            this.somaMenor += n * Operacoes.eval(funcao.replaceAll("x", this.getNotationValue(i)));
+            integrais[1] += n * Operacoes.eval(funcao.replaceAll("x", df.format(i)));
         }
 
+        integrais[0] = Math.abs(integrais[0]);
+        integrais[1] = Math.abs(integrais[1]);
+
+        return integrais;
     }
 
-    public void calculateIntegral() {
-        somaPelaDireita();
-        somaPelaEsquerda();
+    public String getIntegralAsString() {
+
+        double[] vect = calculateIntegral();
+        return Double.toString(vect[0]) + " < A < " + Double.toString(vect[1]);
     }
-    public double getSomaMaior() {
-        return this.somaMaior;
-    }
-    public double getSomaMenor() {
-        return this.somaMenor;
-    }
-    
+     
 }
 
