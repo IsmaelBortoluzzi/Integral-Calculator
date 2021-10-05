@@ -1,17 +1,18 @@
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
     public static void main(String[] args) {
 
         // Scanner sc = new Scanner(System.in);
-        double a=0, b=1, n=0.25;
+        double a=0, b=1, n=1000;
         String funcao = "x^2";
 
         Riemann soma = new Riemann(a, b, n, funcao);
 
-        soma.calculateIntegral();
+        System.out.println(soma.calculateIntegral()[0] + " " + soma.calculateIntegral()[1]);
 
-        System.out.println(soma.getSomaMaior() + " " + soma.getSomaMenor());
+        System.out.println(soma.getIntegralAsString());
 
         // System.out.print("Digite a função que deseja para calcular a integral: ");
         // funcao = sc.nextLine();
@@ -24,7 +25,7 @@ public class Main {
 
 
 
-        System.out.println(Operacoes.eval(funcao));
+        //System.out.println(Operacoes.eval(funcao));
 
 
         //sc.close();
